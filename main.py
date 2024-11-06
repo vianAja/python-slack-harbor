@@ -117,9 +117,9 @@ def handle_request():
         "message": "Data berhasil diterima",
         "received_data": 'aman'
     }
-    client = WebClient(token="xoxb-7972663934389-7977375587158-yTVQoJgJRJPqkBMRCxWg5io7")
-    channel_id = "C07UWDV3FPU"
-    name_bot = "Python-Harbor"
+    client = WebClient(token="TOKEN_OAUTH")
+    channel_id = "CHANNEL_ID_SLACK"
+    name_bot = "NAME_BOT"
     try:
         response = client.chat_postMessage(
             channel=channel_id,
