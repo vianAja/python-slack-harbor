@@ -10,26 +10,12 @@ app = Flask(__name__)
 
 def scrapping(data):
     typeEvent = data.get('type')
-    print(typeEvent)
-    
     waktu = datetime.datetime.fromtimestamp(data['occur_at'])
-    print(waktu)
-
     user = data['operator']
-    print('user:',user)
-
     image = data['event_data']['resources'][0]['resource_url']
-    print(image)
-
     level_Vulnerability = data['event_data']['resources'][0]['scan_overview']['application/vnd.security.vulnerability.report; version=1.1']['severity']
-    print('level Vulnerability:',level_Vulnerability)
-
     total_vulnerability = data['event_data']['resources'][0]['scan_overview']['application/vnd.security.vulnerability.report; version=1.1']['summary']['total']
-    print('total vulnerability report:', total_vulnerability)
-
     detail_vulnerability = data['event_data']['resources'][0]['scan_overview']['application/vnd.security.vulnerability.report; version=1.1']['summary']['summary']
-    print('detail Vulnerability:', detail_vulnerability)
-
     template_json = [
                 {
                     'type': 'section',
@@ -107,19 +93,15 @@ def scrapping(data):
 @app.route('/test', methods=['POST'])
 def handle_request():
     data = request.get_json()
-    print(data)
-    
     hasil = scrapping(data)
-    print('\n\n\n')
-    print(hasil)
-    
     response_data = {
         "message": "Data berhasil diterima",
         "received_data": 'aman'
     }
-    client = WebClient(token="TOKEN_OAUTH")
+    token_slack = "TOKEN_OAUTH"
     channel_id = "CHANNEL_ID_SLACK"
     name_bot = "NAME_BOT"
+    client = WebClient(token=token_slack)
     try:
         response = client.chat_postMessage(
             channel=channel_id,
